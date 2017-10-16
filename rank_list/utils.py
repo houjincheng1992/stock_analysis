@@ -28,7 +28,7 @@ def get_last_ranklist_detail():
     """
     fields = ['code', 'name', 'pcharge', 'amount', 'buy', 'bratio', 'sell', 'sratio', 'reason',
               'date']
-    today = datetime.datetime.today().strftime('%Y-%m-%d')
+    today = (datetime.datetime.today() - datetime.timedelta(days=1)).strftime('%Y-%m-%d')
     top_list = ts.top_list(today)
     if top_list is None or not len(top_list):
         return

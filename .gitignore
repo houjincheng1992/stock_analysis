@@ -1,0 +1,5 @@
+*/migrations/*
+.idea/
+*.pyc
+logs/
+nohup.out

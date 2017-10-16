@@ -83,8 +83,8 @@ DATABASES = {
         'ENGINE': 'django_mysqlpool.backends.mysqlpool',
         'NAME': 'stock_analysis',  # Or path to database file if using sqlite3.
         'USER': 'root',  # Not used with sqlite3.
-        'PASSWORD': '123ssdlh',  # Not used with sqlite3.
-        'HOST': '127.0.0.1',
+        # 'PASSWORD': '123ssdlh',  # Not used with sqlite3.
+        'HOST': 'localhost',
         # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '8306',  # Set to empty string for default. Not used with sqlite3.
         'SIZE': 5,
@@ -134,7 +134,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 CRONJOBS = [
-    ('*/1 * * * *', 'cron_task.cron.get_last_charge_detail_by_inst_scheduled_job')
+    ('*/1 * * * *', 'cron_task.cron.get_last_charge_detail_by_inst_scheduled_job'),
+    ('*/1 * * * *', 'cron_task.cron.get_last_ranklist_detail_scheduled_job'),
 ]
 
 # A sample logging configuration. The only tangible logging

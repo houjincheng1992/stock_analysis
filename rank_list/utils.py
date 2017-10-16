@@ -26,7 +26,7 @@ def get_last_ranklist_detail():
     """
     :return: 
     """
-    fields = ['code', 'name', 'pcharge', 'amount', 'buy', 'bratio', 'sell', 'sratio', 'reason',
+    fields = ['code', 'name', 'pchange', 'amount', 'buy', 'bratio', 'sell', 'sratio', 'reason',
               'date']
     today = (datetime.datetime.today() - datetime.timedelta(days=1)).strftime('%Y-%m-%d')
     top_list = ts.top_list(today)
@@ -41,7 +41,7 @@ def get_last_ranklist_detail():
         for f in fields:
             per_dict.update({f: top_list[f][i]})
         r_model = RankListDailyData(code=per_dict.get('code'), name=per_dict.get('name'),
-                                    pcharge=per_dict.get('pcharge'), amount=per_dict.get('amount'),
+                                    pcharge=per_dict.get('pchange'), amount=per_dict.get('amount'),
                                     buy=per_dict.get('buy'), bratio=per_dict.get('bratio'),
                                     sell=per_dict.get('sell'), sratio=per_dict.get('sratio'),
                                     reason=compare_by_value_get_key(RANK_REASON,

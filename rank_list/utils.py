@@ -30,7 +30,7 @@ def get_last_ranklist_detail():
               'date']
     today = datetime.datetime.today().strftime('%Y-%m-%d')
     top_list = ts.top_list(today)
-    if not top_list:
+    if top_list is None or not len(top_list):
         return
     if RankListDailyData.objects.filter(type_date=today).exists():
         return

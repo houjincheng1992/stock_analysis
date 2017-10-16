@@ -83,8 +83,8 @@ DATABASES = {
         'ENGINE': 'django_mysqlpool.backends.mysqlpool',
         'NAME': 'stock_analysis',  # Or path to database file if using sqlite3.
         'USER': 'root',  # Not used with sqlite3.
-        'PASSWORD': '123ssdlh',  # Not used with sqlite3.
-        'HOST': '127.0.0.1',
+        # 'PASSWORD': '123ssdlh',  # Not used with sqlite3.
+        'HOST': 'localhost',
         # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '8306',  # Set to empty string for default. Not used with sqlite3.
         'SIZE': 5,

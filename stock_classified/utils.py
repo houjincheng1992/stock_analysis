@@ -59,3 +59,14 @@ def get_last_stock_basic_info():
             bulk_list.append(r_model)
     StockBasicData.objects.bulk_create(bulk_list)
 
+
+def get_realtime_stock_charge_info(stock_list):
+    """
+    get realtime stock charge info
+    :return:
+    """
+    interest_list = []
+    if isinstance(stock_list, "list"):
+        interest_list = stock_list
+    df = ts.get_realtime_quotes(interest_list)
+

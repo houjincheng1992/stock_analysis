@@ -6,11 +6,10 @@ author: houjincheng@163.com
 date: 2017-10-15
 """
 
-from .models import RankListDailyData
+from .models import InstChargeDailyData
 from .models import RANK_REASON
 import tushare as ts
 import logging
-import chardet
 import sys
 
 reload(sys)
@@ -33,7 +32,7 @@ def get_last_charge_detail_by_inst():
 
     bulk_list = []
     max_date = max(inst_detail['date'])
-    if RankListDailyData.objects.filter(type_date=max_date).exists():
+    if InstChargeDailyData.objects.filter(type_date=max_date).exists():
         return
 
     for i in range(inst_detail_len):
@@ -44,12 +43,13 @@ def get_last_charge_detail_by_inst():
             continue
         if per_dict.get('date') != max_date:
             continue
-        r_model = RankListDailyData(type_date=per_dict.get('date'), code=per_dict.get('code'),
-                                    name=per_dict.get('name'),bamount=per_dict.get('bamount'),
-                                    samount=per_dict.get('samount'),
-                                    type=compare_by_value_get_key(RANK_REASON, per_dict.get('type')))
+        r_model = InstChargeDailyData(type_date=per_dict.get('date'), code=per_dict.get('code'),
+                                      name=per_dict.get('name'),bamount=per_dict.get('bamount'),
+                                      samount=per_dict.get('samount'),
+                                      type=compare_by_value_get_key(RANK_REASON,
+                                                                    per_dict.get('type')))
         bulk_list.append(r_model)
-    RankListDailyData.objects.bulk_create(bulk_list)
+    InstChargeDailyData.objects.bulk_create(bulk_list)
 
 
 def compare_by_value_get_key(item, content):

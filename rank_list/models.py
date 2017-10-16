@@ -23,9 +23,9 @@ RANK_REASON = (
 )
 
 
-class RankListDailyData(models.Model):
+class InstChargeDailyData(models.Model):
     """
-    ranklist daily data in db
+    Institute charge daily data in db
     """
     type_date = models.DateField(verbose_name=u'type in date', default=datetime.date.today, db_index=True)
     code = models.IntegerField(verbose_name=u'stock code', db_index=True)

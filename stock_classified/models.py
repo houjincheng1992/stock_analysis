@@ -14,5 +14,5 @@ class StockBasicData(models.Model):
     """
     code = models.IntegerField(verbose_name=u'stock code', unique=True, db_index=True)
     name = models.CharField(verbose_name=u'stock name', max_length=20)
-    c_name = models.SmallIntegerField(verbose_name=u'stock industry', choices=INDUSTRY_LIST)
-    area = models.SmallIntegerField(verbose_name=u'area', choices=AREA_LIST)
+    c_name = models.SmallIntegerField(verbose_name=u'stock industry', choices=INDUSTRY_LIST, db_index=True)
+    area = models.SmallIntegerField(verbose_name=u'area', choices=AREA_LIST, db_index=True)

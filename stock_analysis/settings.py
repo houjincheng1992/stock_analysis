@@ -137,6 +137,7 @@ STATIC_URL = '/static/'
 CRONJOBS = [
     ('*/1 * * * *', 'cron_task.cron.get_last_charge_detail_by_inst_scheduled_job'),
     ('*/1 * * * *', 'cron_task.cron.get_last_ranklist_detail_scheduled_job'),
+    ('*/1 * * * *', 'cron_task.cron.get_last_stock_basic_info_scheduled_job'),
 ]
 
 # A sample logging configuration. The only tangible logging

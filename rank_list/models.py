@@ -69,3 +69,9 @@ class RankListDailyData(models.Model):
                                       db_index=True)
     type_date = models.DateField(verbose_name=u'type in date', default=datetime.date.today,
                                  db_index=True)
+
+    class Meta(object):
+        """
+        meta
+        """
+        unique_together = ['code', 'type_date', 'reason']

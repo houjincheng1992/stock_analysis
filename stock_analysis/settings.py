@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_crontab',
     'rank_list.apps.RankListConfig',
+    'stock_classified.apps.StockClassifiedConfig',
 ]
 
 MIDDLEWARE = [

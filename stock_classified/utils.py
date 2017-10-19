@@ -88,7 +88,7 @@ def get_realtime_stock_charge_info(stock_list):
             if cur_code not in tmp_dict:
                 tmp_dict[cur_code] = {}
             tmp_dict[cur_code].update({f: df[f][i]})
-        type_datetime = datetime.datetime.strptime(df['date'] + " " + df['time'],
+        type_datetime = datetime.datetime.strptime(df['date'][i] + " " + df['time'][i],
                                                    '%Y-%m-%d %H:%M:%S')
         tmp_dict[cur_code].update({'type_datetime': type_datetime})
 
@@ -99,7 +99,6 @@ def get_realtime_stock_charge_info(stock_list):
 
     bulk_list = []
     for key in tmp_dict.keys():
-        type_datetime = " ".join([tmp_dict[key]["date"], tmp_dict[key]["time"]])
         cur_stock = StockChargeRealTimeData(code=key, name=tmp_dict[key]['name'],
                                             open=tmp_dict[key]['open'],
                                             pre_close=tmp_dict[key]['pre_close'],
@@ -110,7 +109,8 @@ def get_realtime_stock_charge_info(stock_list):
                                             ask=tmp_dict[key]['ask'],
                                             volume=tmp_dict[key]['volume'],
                                             amount=tmp_dict[key]['amount'],
-                                            type_datetime=type_datetime)
+                                            type_datetime=tmp_dict[key]['type_datetime'],
+                                            bavp=tmp_dict[key]['bavp'])
         bulk_list.append(cur_stock)
     StockChargeRealTimeData.objects.bulk_create(bulk_list)
 

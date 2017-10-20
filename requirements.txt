@@ -1,0 +1,10 @@
+Django==1.11.1
+
+#依赖系统环境
+#yum mysql-devel
+MySQL-python==1.2.5
+
+django-mysqlpool==0.1.post9
+# v2.3 版本新增
+django-crontab==0.7.1
+chardet==3.0.4

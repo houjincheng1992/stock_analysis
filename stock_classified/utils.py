@@ -71,48 +71,49 @@ def get_realtime_stock_charge_info(stock_list):
     get realtime stock charge info
     :return:
     """
-    field = ['code', 'name', 'open', 'pre_close', 'price', 'high', 'low', 'bid', 'ask', 'volume',
-             'amount', 'date', 'time']
-    json_field = [['b1_v', 'b1_p'], ['b2_v', 'b2_p'], ['b3_v', 'b3_p'], ['b4_v', 'b4_p'],
-                  ['b5_v', 'b5_p'], ['a1_v', 'a1_p'], ['a2_v', 'a2_p'], ['a3_v', 'a3_p'],
-                  ['a4_v', 'a4_p'], ['a5_v', 'a5_p']]
-    interest_list = []
-    if isinstance(stock_list, list):
-        interest_list = stock_list
-    df = ts.get_realtime_quotes(interest_list)
+    try:
+        field = ['code', 'name', 'open', 'pre_close', 'price', 'high', 'low', 'bid', 'ask', 'volume',
+                 'amount', 'date', 'time']
+        json_field = [['b1_v', 'b1_p'], ['b2_v', 'b2_p'], ['b3_v', 'b3_p'], ['b4_v', 'b4_p'],
+                      ['b5_v', 'b5_p'], ['a1_v', 'a1_p'], ['a2_v', 'a2_p'], ['a3_v', 'a3_p'],
+                      ['a4_v', 'a4_p'], ['a5_v', 'a5_p']]
+        interest_list = []
+        if isinstance(stock_list, list):
+            interest_list = stock_list
+        df = ts.get_realtime_quotes(interest_list)
 
-    tmp_dict = dict()
-    for i in range(len(df)):
-        cur_code = df['code'][i]
-        for f in field:
-            if cur_code not in tmp_dict:
-                tmp_dict[cur_code] = {}
-            tmp_dict[cur_code].update({f: df[f][i]})
-        type_datetime = datetime.datetime.strptime(df['date'][i] + " " + df['time'][i],
-                                                   '%Y-%m-%d %H:%M:%S')
-        tmp_dict[cur_code].update({'type_datetime': type_datetime})
+        tmp_dict = dict()
+        for i in range(len(df)):
+            cur_code = df['code'][i]
+            for f in field:
+                if cur_code not in tmp_dict:
+                    tmp_dict[cur_code] = {}
+                tmp_dict[cur_code].update({f: df[f][i]})
+            type_datetime = datetime.datetime.strptime(df['date'][i] + " " + df['time'][i],
+                                                       '%Y-%m-%d %H:%M:%S')
+            tmp_dict[cur_code].update({'type_datetime': type_datetime})
 
-        json_dict = dict()
-        for f in json_field:
-            json_dict.update({f[0]: df[f[0]][i], f[1]: df[f[1]][i]})
-        tmp_dict[cur_code].update({"bavp": json_dict})
+            json_dict = dict()
+            for f in json_field:
+                json_dict.update({f[0]: df[f[0]][i], f[1]: df[f[1]][i]})
+            tmp_dict[cur_code].update({"bavp": json_dict})
 
-    bulk_list = []
-    for key in tmp_dict.keys():
-        cur_stock = StockChargeRealTimeData(code=key, name=tmp_dict[key]['name'],
-                                            open=tmp_dict[key]['open'],
-                                            pre_close=tmp_dict[key]['pre_close'],
-                                            price=tmp_dict[key]['price'],
-                                            high=tmp_dict[key]['high'],
-                                            low=tmp_dict[key]['low'],
-                                            bid=tmp_dict[key]['bid'],
-                                            ask=tmp_dict[key]['ask'],
-                                            volume=tmp_dict[key]['volume'],
-                                            amount=tmp_dict[key]['amount'],
-                                            type_datetime=tmp_dict[key]['type_datetime'],
-                                            bavp=tmp_dict[key]['bavp'])
-        bulk_list.append(cur_stock)
-    StockChargeRealTimeData.objects.bulk_create(bulk_list)
+        bulk_list = []
+        for key in tmp_dict.keys():
+            cur_stock = StockChargeRealTimeData.objects.update_or_create(
+                code=key,
+                type_datetime=tmp_dict[key]['type_datetime'],
+                defaults={"name": tmp_dict[key]['name'], "open": tmp_dict[key]['open'],
+                          "pre_close": tmp_dict[key]['pre_close'], "price": tmp_dict[key]['price'],
+                          "high": tmp_dict[key]['high'], "low": tmp_dict[key]['low'],
+                          "bid": tmp_dict[key]['bid'], "ask": tmp_dict[key]['ask'],
+                          "volume": tmp_dict[key]['volume'], "bavp": tmp_dict[key]['bavp']}
+            )
+
+        #     bulk_list.append(cur_stock)
+        # StockChargeRealTimeData.objects.bulk_create(bulk_list)
+    except Exception as e:
+        logger.warning("%s" % e)
 
 
 

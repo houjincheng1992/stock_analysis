@@ -40,5 +40,5 @@ def get_realtime_stock_charge_info_scheduled_job():
     :return: 
     """
     code_list = ["000786", "300654", "000878", "603367", "000968", "300240", "000605", "300701"]
-    get_realtime_stock_charge_info()
+    get_realtime_stock_charge_info(code_list)
     logger.info("done")

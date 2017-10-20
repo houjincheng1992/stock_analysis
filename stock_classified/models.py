@@ -34,7 +34,7 @@ class StockChargeRealTimeData(models.Model):
     ask = models.FloatField(verbose_name=u'sold 1 price', null=True)
     volume = models.FloatField(verbose_name=u'bargin num', null=True)
     amount = models.FloatField(verbose_name=u'bargin price (yuan)', null=True)
-    bavp = models.CharField(verbose_name=u'real time buy/sold bargin', max_length=200, null=True,
+    bavp = models.CharField(verbose_name=u'real time buy/sold bargin', max_length=400, null=True,
                             blank=True)
     type_datetime = models.DateTimeField(verbose_name=u'type in datetime',
                                          default=datetime.datetime.now(),
